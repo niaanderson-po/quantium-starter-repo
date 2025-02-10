@@ -8,10 +8,10 @@ app = Dash(__name__)
 app.layout = html.Div([
     html.H4('Soul Foods: Pink Morsel Visualizer'),
     dcc.Graph(id="graph"),
-    dcc.Checklist(
-        id="checklist",
-        options=["north", "south", "east","west"],
-        value=["north", "south", "east","west"],
+    dcc.RadioItems(
+        id="radio",
+        options=["north", "south", "east","west", "all"],
+        value="all",
         inline=True
     ),
 ])
@@ -19,11 +19,14 @@ app.layout = html.Div([
 
 @app.callback(
     Output("graph", "figure"), 
-    Input("checklist", "value"))
+    Input("radio", "value"))
 def update_line_chart(region):
     df = pd.read_csv('/Users/niaapple/Desktop/VSCode/quantium-starter-repo/formatted_data.csv') # replace with your own data source
-    mask = df.region.isin(region)
-    fig = px.line(df[mask], 
+    if region == "all":
+        trimmed_data = df
+    else:
+        trimmed_data = df[df["region"] == region]
+    fig = px.line(trimmed_data, 
         x="date", y="sales", color='region')
     return fig
 
