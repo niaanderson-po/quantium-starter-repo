@@ -2,8 +2,11 @@ from dash import Dash, dcc, html, Input, Output
 import plotly.express as px
 import pandas as pd
 
-#data used for graph visual
-df = pd.read_csv('/Users/niaapple/Desktop/VSCode/quantium-starter-repo/formatted_data.csv')
+#path to the formatted data file 
+DATA_PATH = "./formatted_data.csv"
+
+#load in data
+df = pd.read_csv(DATA_PATH)
 
 #initialize the app
 app = Dash(__name__)
