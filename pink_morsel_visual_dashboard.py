@@ -13,7 +13,7 @@ COLORS = {
 df = pd.read_csv(DATA_PATH)
 
 #initialize the app
-app = Dash(__name__)
+dash_app = Dash(__name__)
 
 # create the #graph representation of df - dataframe
 def generate_figure(chart_data):
@@ -60,7 +60,7 @@ region_picker_wrapper = html.Div(
 )
 
 #define input-output for user interaction
-@app.callback( 
+@dash_app.callback( 
     Output(visualization, "figure"),
     Input(region_picker, "value")
     )
@@ -78,7 +78,7 @@ def update_grapgh(region):
     return fig
 
 #app layout with html and css
-app.layout = html.Div([
+dash_app.layout = html.Div([
     header,
     region_picker_wrapper,
     visualization
@@ -86,4 +86,4 @@ app.layout = html.Div([
 
 #run the app
 if __name__ == '__main__':
-    app.run(debug=True)
+    dash_app.run_server()
